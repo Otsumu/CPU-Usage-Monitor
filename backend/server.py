@@ -6,7 +6,7 @@ from typing import Optional
 
 app = FastAPI()
 
-#フロントエンドの静的ファイルを使用するためにFastAPIのStaticFilesを設定
+#フロントエンドの静的ファイルを使用するためにマウント
 app.mount("/frontend/static", StaticFiles(directory="../frontend/static"), name="static")
 
 #既存インスタンスの作成
@@ -31,7 +31,6 @@ def post_metrics(json_data: dict):
 
  #get_summary_dataのデータポイント設定
  #cpu_id: int = None = Union[int, None]と同じ意味
- #cpu_idが整数 or Noneであることを示すためのFastAPIの型ヒント、
  #cpu_idの指定がない場合、Noneをデフォルト値として使用、全てのCPUの集計データが返される(interval_typeも同様)
 """集計加工ダミーデータの取得"""
 @app.get("/api/summary")
@@ -45,8 +44,7 @@ def get_summary_data(start_timestamp: int, end_timestamp: int, cpu_id: Optional[
         for cpu_id in range(4): # cpu_id0～3のダミーデータを生成
             base = 25 + (cpu_id * 5) # CPUごとのベース値を設定
             variation = random.randint(-15, 15) # ランダムな変動値を生成
-            utilization = base + variation + (i + 1.5) # 時間経過に伴う変動を加える、パラメータ1.5は変動の調整値
-
+            utilization = base + variation + (i * 1.5) # 時間経過に伴う変動を加える
             dummy_data.append({
                 "bucket_timestamp": current_time,           
                 "cpu_id": cpu_id,                        
@@ -55,6 +53,7 @@ def get_summary_data(start_timestamp: int, end_timestamp: int, cpu_id: Optional[
             }) 
     return dummy_data
 
+    #加工集計データで出力する場合はこっちを使用！
     #print(f"=== API呼び出し ===")
     #print(f"interval_type: {interval_type}")
     #summary_data = summary_db.get_summary_data(start_timestamp, end_timestamp, cpu_id, interval_type)

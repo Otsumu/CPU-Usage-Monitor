@@ -4,9 +4,10 @@ from collections import defaultdict
 """データ挿入を行うクラス
 - CPUの使用率データをJSON形式で受け取り、データベースに挿入する
 - リアルタイムのCPU使用率データを取得する
-- CPU使用率データをCPUごとにグループ化して取得する"""
+- CPU使用率データをCPUごとにグループ化して取得する
+"""
 
-class InsertMetrics: #データ挿入
+class InsertMetrics: #データ挿入クラス
     def __init__(self, db_path: str="../data/metrics.db"):
         self.db_path = db_path
         self.CPU_NUMBERS = {i: f'cpu{i}' for i in range(16)}

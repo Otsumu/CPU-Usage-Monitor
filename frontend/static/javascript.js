@@ -119,7 +119,7 @@ async function fetchCustomRange() {
     }
 }
 
-//生データ専用の処理関数
+//生データ専用の処理関数(mode=realtimeの時のみJSONデータを使用)
 function processCpuData(data, mode) {
     const cpuData = {};
     Object.keys(data).forEach(cpuName => {
@@ -165,27 +165,26 @@ async function loadSummaryData(mode) {
 }
 //calculateTimeRange() → {start: 時刻, end: 時刻}オブジェクトを返す
 function calculateTimeRange(mode) {
-    const dataStartTime = 1750922781;
-    const dataEndTime = 1750933581;
+    const now = Math.floor(Date.now() / 1000);
     if (mode === "30minutes") {
         return {
-            start: dataStartTime,
-            end: dataEndTime
+            start: now - (5 * 3600), // 5時間前からのデータを取得
+            end: now
         };
     } else if (mode === "1hour") {
         return {
-            start: dataStartTime - (3 * 3600), // 3時間前からのデータを取得
-            end: dataEndTime 
+            start: now - (5 * 3600), // 5時間前からのデータを取得
+            end: now 
         };
     } else if (mode === "1day") {
         return {
-            start: dataStartTime - (7 * 24 * 3600), // 7日前からのデータを取得
-            end: dataEndTime  
+            start: now - (7 * 24 * 3600), // 7日前からのデータを取得
+            end: now  
         };
-    } else if (mode === "custom") { //現時点では不要、将来の拡張性を考慮し残しておく
+    } else if (mode === "custom") {
         return {
-            start: dataStartTime - (24 * 3600),
-            end: dataEndTime
+            start: now - (24 * 3600),
+            end: now
         }
     }
 }
@@ -219,8 +218,8 @@ function createCpuUsageChart(data, mode = 'realtime') {
             backgroundColor: cpuColor(index),
             tension: 0,
             fill: false, 
-            pointRadius: 3,
-            pointHoverRadius: 6
+            pointRadius: 2,
+            pointHoverRadius: 4
         };
     });
 
@@ -351,8 +350,8 @@ function getTimeSettings(mode) {
             return {
                 unit: 'minute',
                 displayFormat: 'HH:mm', 
-                stepSize: 15,
-                maxTicksLimit: 6, 
+                stepSize: 15, // 30分ごとに目盛り
+                maxTicksLimit: 10, 
                 title: '時刻(30分間隔)'
             };
         case '1hour':
