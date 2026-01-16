@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/tsujimotoaya/FastAPI-TEST/venv"
+VIRTUAL_ENV="/Users/tsujimotoaya/Projects/python/CPU-Usage-Monitor/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

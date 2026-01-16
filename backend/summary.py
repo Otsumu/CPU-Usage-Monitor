@@ -14,7 +14,7 @@ class CreateSummary: #集計処理
         self.db_path = db_path
         #self.CPU_NUMBERS = {i: f'cpu{i}' for i in range(16)}
 
-    def create_summary_data(self, index):
+    def create_summary_data(self, seconds, index):
         if index < 0 or index >= len(CreateSummary.INTERVAL_TYPE):
             raise ValueError(f"有効なインデックスを選択してください: {index}")
         
