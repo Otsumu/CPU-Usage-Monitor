@@ -362,3 +362,71 @@ SELECT * FROM cpu_load_summary LIMIT 10;
 # 終了
 .quit
 ```
+
+## 使用技術
+
+- Python 3.8+
+- FastAPI
+- SQLite
+- Uvicorn
+
+## 環境構築
+
+このプロジェクトをローカルで動作させるための手順です。
+
+### 前提条件
+
+- Python 3.8以上がインストールされていること
+- Gitがインストールされていること
+
+### セットアップ手順
+
+#### 1. リポジトリのクローン
+
+```bash
+git clone https://github.com/yourusername/cpu-monitoring-system.git
+```
+
+#### 2. ディレクトリに移動
+
+```bash
+cd cpu-monitoring-system
+```
+
+#### 3. 仮想環境の作成
+
+```bash
+python -m venv venv
+```
+
+#### 4. 仮想環境の有効化
+
+**macOS/Linux:**
+
+```bash
+source venv/bin/activate
+```
+
+**Windows:**
+
+```bash
+venv\Scripts\activate
+```
+
+#### 5. 必要なパッケージのインストール
+
+```bash
+pip install fastapi uvicorn psutil
+```
+
+#### 6. アプリケーションの起動
+
+```bash
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+※初回起動時にデータベースとテーブルが自動的に作成されます
+
+#### 7. アプリケーションへのアクセス
+
+メインアプリケーション: http://localhost:8000/frontend/static/index.html
