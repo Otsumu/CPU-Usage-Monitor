@@ -23,8 +23,8 @@
                 </select>
                 <div id ="customRangeInputs" style ="display: none; text-align: right;"> <!-- specifictimeボタンクリックで時間選択ボタン出現！ -->
                     <div class ="selectCalendar">指定時間の入力
-                        <input type="datetime-local" id="startTime">
-                        <input type="datetime-local" id="endTime">
+                        <input type="datetime-local" id="startTime" max="">
+                        <input type="datetime-local" id="endTime" max="">
                         <button id="fetchButton" onclick="fetchCustomRange()">表示</button>
                     </div>
                 </div>
